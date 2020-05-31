@@ -1,0 +1,14 @@
+.Logo {
+	background-color: white;
+	padding: 8px;
+	height: 100%;
+	/* height: 80%; */
+	box-sizing: border-box; /*80% height includes the padding since using box-sizeing*/
+	border-radius: 5px; /* to have round edges */
+}
+
+/* image take all the space of the logo size height */
+/* image can take some spaces around it */
+.Logo img {
+	height: 100%;
+}

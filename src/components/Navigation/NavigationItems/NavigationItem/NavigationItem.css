@@ -1,0 +1,54 @@
+/*base css class is for smaller mobile screen 
+* modified css style than before
+*/
+.NavigationItem {
+	margin: 10px 0;
+	box-sizing: border-box;
+	display: block; /* on mobile */
+	/* align-items: center; vertically center */
+	width: 100%;
+}
+.NavigationItem a {
+	color: #8f5c2c; /* becasue sideDrawer background is white */
+	text-decoration: none;
+	width: 100%;
+	/* padding: 16px 10px;
+	border-bottom: 4px solid transparent; */
+	box-sizing: border-box;
+	display: block; /* to let each link's height take effect*/
+}
+
+.NavigationItem a:hover,
+.NavigationItem a:active,
+.NavigationItem a.active {
+	color: #40a4c8;
+}
+
+@media (min-width: 500px) {
+	/* write and keep original style for desktop screen : larger screen*/
+	.NavigationItem {
+		margin: 0;
+		/* box-sizing: border-box; */
+		display: flex; /* want to align the links vertically inside of each item */
+		align-items: center; /* vertically center*/
+		height: 100%;
+		width: auto;
+	}
+	.NavigationItem a {
+		color: white;
+		text-decoration: none;
+		height: 100%;
+		padding: 16px 10px;
+		border-bottom: 4px solid transparent;
+		/* box-sizing: border-box;  duplicated */
+		/* display: block; to let each link's height take effect */
+	}
+
+	.NavigationItem a:hover,
+	.NavigationItem a:active,
+	.NavigationItem a.active {
+		background-color: #8f5c2c;
+		border-bottom: 4px solid #40a4c8;
+		color: white;
+	}
+}
