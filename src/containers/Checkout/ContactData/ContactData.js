@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Button from 'src/components/UI/Button/Button';
+import Input from 'src/components/UI/Input/input';
 import classes from 'src/containers/Checkout/ContactData/ContactData.css';
 import axios from 'src/axios-orders';
 import Spinner from 'src/components/UI/Spinner/Spinner';
-import Input from 'src/components/UI/Input/input';
 import { connect } from 'react-redux';
 import withErrorHandler from 'src/hoc/withErrorHandler/withErrorHandler';
 import * as actionCreators from 'src/store/actions/index';
@@ -88,16 +88,34 @@ const ContactData = (props) => {
 	const [ formIsValid, setformIsValid ] = useState(false);
 	// const [ loading, setLoading ] = useState(false); // in redux now
 	const checkValidation = (value, rules) => {
+		let isValid = true;
+		if (!rules) {
+			return true;
+		}
+
 		if (rules.required) {
-			if (value.trim() === '') return false;
+			isValid = value.trim() !== '' && isValid;
 		}
-		if (rules.minLen) {
-			if (value.length < rules.minLen) return false;
+
+		if (rules.minLength) {
+			isValid = value.length >= rules.minLength && isValid;
 		}
-		if (rules.maxLen) {
-			if (value.length > rules.maxLen) return false;
+
+		if (rules.maxLength) {
+			isValid = value.length <= rules.maxLength && isValid;
 		}
-		return true;
+
+		if (rules.isEmail) {
+			const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+			isValid = pattern.test(value) && isValid;
+		}
+
+		if (rules.isNumeric) {
+			const pattern = /^\d+$/;
+			isValid = pattern.test(value) && isValid;
+		}
+
+		return isValid;
 	};
 	const orderHandler = (event) => {
 		event.preventDefault();
