@@ -1,5 +1,6 @@
 import * as actionTypes from 'src/store/actions/actionTypes';
 import axios from 'src/axios-orders';
+import { useImperativeHandle } from 'react';
 
 export const purchaseBurgerSuccess = (id, orderData) => {
 	return {
@@ -23,11 +24,11 @@ export const purchaseBurgerStart = () => {
 };
 
 // async call to submit order data to server
-export const purchaseBurger = (orderData) => {
+export const purchaseBurger = (orderData, token) => {
 	return (dispatch) => {
 		purchaseBurgerStart();
 		axios
-			.post('/orders.json', orderData)
+			.post('/orders.json?auth=' + token, orderData)
 			.then((resp) => {
 				console.log('order resp:', resp.data);
 				dispatch(purchaseBurgerSuccess(resp.data.name, orderData));
@@ -70,11 +71,13 @@ export const fetchOrderFail = (error) => {
 };
 
 // async call to fetch order data from server
-export const fetchOrders = () => {
+// add atuthentiation
+export const fetchOrders = (token, userId) => {
 	return (dispatch) => {
 		dispatch(fetchOrderStart());
+		const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"';
 		axios
-			.get('/orders.json')
+			.get('/orders.json' + queryParams)
 			.then((res) => {
 				console.log('fetch orders data: ', res.data);
 				// transform data

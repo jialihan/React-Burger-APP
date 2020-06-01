@@ -11,7 +11,7 @@ const Orders = (props) => {
 	// const [ loading, setLoading ] = useState(true); // move to redux
 	useEffect(() => {
 		// fetch order data from server
-		props.onFetchOrders();
+		props.onFetchOrders(props.token, props.userId);
 		// axios
 		// 	.get('/orders.json')
 		// 	.then((res) => {
@@ -38,13 +38,15 @@ const Orders = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		orders: state.order.orders,
-		loading: state.order.loading
+		loading: state.order.loading,
+		token: state.auth.token,
+		userId: state.auth.userId
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onFetchOrders: () => dispatch(actionCreators.fetchOrders())
+		onFetchOrders: (token, userId) => dispatch(actionCreators.fetchOrders(token, userId))
 	};
 };
 

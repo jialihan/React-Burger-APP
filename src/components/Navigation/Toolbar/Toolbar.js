@@ -6,14 +6,12 @@ import DrawerToggle from 'src/components/Navigation/SideDrawer/DrawerToggle/Draw
 const Toolbar = (props) => {
 	return (
 		<header className={classes.Toolbar}>
-			{/* <div>MENU</div> */}
 			<DrawerToggle clicked={props.drawerToggleClicked} />
-			{/* <div>LOGO</div>  try to conrol the height of logo here*/}
 			<div className={classes.Logo}>
 				<Logo />
 			</div>
 			<nav className={classes.DesktopOnly}>
-				<NavigationItems />
+				<NavigationItems isAuthenticated={props.isAuth} />
 			</nav>
 		</header>
 	);

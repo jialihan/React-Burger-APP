@@ -127,11 +127,12 @@ const ContactData = (props) => {
 			formData[id] = orderForm[id].value;
 		}
 		const order = {
+			userId: props.userId,
 			ingredients: props.ingredients,
 			price: props.price,
 			orderData: formData
 		};
-		props.onOrderBurger(order);
+		props.onOrderBurger(order, props.token);
 		// Todo: send data to my backend
 		// begin to use dispatching actions
 		// axios
@@ -216,12 +217,14 @@ const mapStateToProps = (state) => {
 	return {
 		ingredients: state.burger.ingredients,
 		price: state.burger.totalPrice,
-		loading: state.order.loading
+		loading: state.order.loading,
+		token: state.auth.token,
+		userId: state.auth.userId
 	};
 };
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onOrderBurger: (orderData) => dispatch(actionCreators.purchaseBurger(orderData))
+		onOrderBurger: (orderData, token) => dispatch(actionCreators.purchaseBurger(orderData, token))
 	};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios));

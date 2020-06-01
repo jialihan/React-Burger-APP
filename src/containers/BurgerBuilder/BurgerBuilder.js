@@ -30,8 +30,12 @@ class BurgerBuilder extends Component {
 	componentDidMount() {
 		console.log('Burgurbuilder props:', this.props);
 		// get ingrdients from server using dispatching actions
+		if (this.props.ingrdients) {
+			return;
+		}
 		this.props.onInitIngredients();
 	}
+
 	purchaseContinueHandler() {
 		console.log('conitnue purchse order......');
 		this.props.onInitPurchase(); // set purchased to false
@@ -59,7 +63,12 @@ class BurgerBuilder extends Component {
 	}
 	purchaseOrderHandler() {
 		console.log('Order button clicked');
-		this.setState({ purchasing: true });
+		if (this.props.isAuthenticate) {
+			this.setState({ purchasing: true });
+		} else {
+			this.props.onSetAuthRedirectPath('/checkout');
+			this.props.history.push('/auth');
+		}
 	}
 	updatePurchaseStatus(ingredients) {
 		const sum = Object.keys(ingredients)
@@ -117,6 +126,7 @@ class BurgerBuilder extends Component {
 						price={this.props.totalPrice}
 						purchasable={this.updatePurchaseStatus(this.props.ingredients)}
 						ordered={this.purchaseOrderHandler}
+						isAuth={this.props.isAuthenticate}
 					/>
 				</Aux>
 			);
@@ -147,7 +157,8 @@ const mapStateToProps = (state) => {
 	return {
 		ingredients: state.burger.ingredients,
 		totalPrice: state.burger.totalPrice,
-		error: state.burger.error
+		error: state.burger.error,
+		isAuthenticate: state.auth.token !== null
 	};
 };
 
@@ -158,7 +169,8 @@ const mapDispatchToProps = (dispatch) => {
 		// onDeleteIngredient: (ingName) => dispatch({ type: actionTypes.REMOVE_INGREDIENT, ingredientName: ingName })
 		onDeleteIngredient: (ingName) => dispatch(actionCreators.removeIngredient(ingName)),
 		onInitIngredients: () => dispatch(actionCreators.initIngredients()),
-		onInitPurchase: () => dispatch(actionCreators.purchaseInit())
+		onInitPurchase: () => dispatch(actionCreators.purchaseInit()),
+		onSetAuthRedirectPath: (path) => dispatch(actionCreators.setAuthRedirectPath(path))
 	};
 };
 
