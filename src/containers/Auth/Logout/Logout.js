@@ -28,7 +28,7 @@ import { connect } from 'react-redux';
 import * as actionCreators from 'src/store/actions/index';
 
 class Logout extends Component {
-	componentWillMount() {
+	componentDidMount() {
 		console.log('logout willMount.....');
 		this.props.onLogout();
 	}

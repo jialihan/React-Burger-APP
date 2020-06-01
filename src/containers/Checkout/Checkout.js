@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import CheckoutSummary from 'src/components/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from 'src/containers/Checkout/ContactData/ContactData';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actionCreators from 'src/store/actions/index';
 
 function Checkout(props) {
 	// const [ ingredients, setIngredients ] = useState(() => {
@@ -15,7 +14,7 @@ function Checkout(props) {
 	// 	return tmp[1].price;
 	// });
 
-	console.log('has ingredients...', props);
+	// console.log('has ingredients...', props);
 	const checkoutCancelHander = () => {
 		props.history.goBack();
 	};

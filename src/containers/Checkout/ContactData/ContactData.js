@@ -7,6 +7,7 @@ import Spinner from 'src/components/UI/Spinner/Spinner';
 import { connect } from 'react-redux';
 import withErrorHandler from 'src/hoc/withErrorHandler/withErrorHandler';
 import * as actionCreators from 'src/store/actions/index';
+import { updateObject, checkValidation } from 'src/shared/utility';
 
 const ContactData = (props) => {
 	// local UI state for the form data
@@ -87,36 +88,6 @@ const ContactData = (props) => {
 	});
 	const [ formIsValid, setformIsValid ] = useState(false);
 	// const [ loading, setLoading ] = useState(false); // in redux now
-	const checkValidation = (value, rules) => {
-		let isValid = true;
-		if (!rules) {
-			return true;
-		}
-
-		if (rules.required) {
-			isValid = value.trim() !== '' && isValid;
-		}
-
-		if (rules.minLength) {
-			isValid = value.length >= rules.minLength && isValid;
-		}
-
-		if (rules.maxLength) {
-			isValid = value.length <= rules.maxLength && isValid;
-		}
-
-		if (rules.isEmail) {
-			const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-			isValid = pattern.test(value) && isValid;
-		}
-
-		if (rules.isNumeric) {
-			const pattern = /^\d+$/;
-			isValid = pattern.test(value) && isValid;
-		}
-
-		return isValid;
-	};
 	const orderHandler = (event) => {
 		event.preventDefault();
 		// alert('conitnue purchse order......');
@@ -136,34 +107,22 @@ const ContactData = (props) => {
 		// Todo: send data to my backend
 		// begin to use dispatching actions
 		// axios
-		// 	.post('/orders.json', order)
-		// 	.then((resp) => {
-		// 		// close spinner & close the modal
-		// 		setLoading(false);
-		// 		// no purchasing state in this compoonent any more
-		// 		// this.setState({ loading: false, purchasing: false });
-		// 		props.history.push('/');
-		// 		console.log(resp);
-		// 	})
-		// 	.catch((err) => {
-		// 		console.log(err);
-		// 		// close spinner & close the modals
-		// 		setLoading(false);
-		// 		//this.setState({ loading: false, purchasing: false });
-		// 	});
 	};
 	const inputChangedHandler = (event, inputIdentifier) => {
 		console.log(event.target.value); // for test at first
-		const updatedOrderForm = { ...orderForm };
-		updatedOrderForm[inputIdentifier].value = event.target.value;
-		updatedOrderForm[inputIdentifier].touched = true;
+
+		const updatedOrderFormElement = updateObject(orderForm[inputIdentifier], {
+			value: event.target.value,
+			touched: true
+		});
 		// if should validate
-		if (updatedOrderForm[inputIdentifier].validation) {
-			updatedOrderForm[inputIdentifier].valid = checkValidation(
-				updatedOrderForm[inputIdentifier].value,
-				updatedOrderForm[inputIdentifier].validation
+		if (updatedOrderFormElement.validation) {
+			updatedOrderFormElement.valid = checkValidation(
+				updatedOrderFormElement.value,
+				updatedOrderFormElement.validation
 			);
 		}
+		const updatedOrderForm = updateObject(orderForm, { [inputIdentifier]: updatedOrderFormElement });
 		// check all id is valid or not
 		let check = true;
 		for (let id in updatedOrderForm) {

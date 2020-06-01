@@ -6,41 +6,11 @@ import * as actionCreators from 'src/store/actions/index';
 import { connect } from 'react-redux';
 import Spinner from 'src/components/UI/Spinner/Spinner';
 import { Redirect } from 'react-router-dom';
-
-const checkValidation = (value, rules) => {
-	let isValid = true;
-	if (!rules) {
-		return true;
-	}
-
-	if (rules.required) {
-		isValid = value.trim() !== '' && isValid;
-	}
-
-	if (rules.minLength) {
-		isValid = value.length >= rules.minLength && isValid;
-	}
-
-	if (rules.maxLength) {
-		isValid = value.length <= rules.maxLength && isValid;
-	}
-
-	if (rules.isEmail) {
-		const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-		isValid = pattern.test(value) && isValid;
-	}
-
-	if (rules.isNumeric) {
-		const pattern = /^\d+$/;
-		isValid = pattern.test(value) && isValid;
-	}
-
-	return isValid;
-};
+import { updateObject, checkValidation } from 'src/shared/utility';
 
 const Auth = (props) => {
 	useEffect(() => {
-		if (!props.buildingBurger && props.authRedirectPath != '/') {
+		if (!props.buildingBurger && props.authRedirectPath !== '/') {
 			props.onSetAuthRedirectPath('/');
 		}
 	}, []);
@@ -101,15 +71,14 @@ const Auth = (props) => {
 	});
 	const inputChangedHandler = (event, inputIdentifier) => {
 		// console.log(event.target.value);
-		const updatedControls = {
-			...authForm,
+		const updatedControls = updateObject(authForm, {
 			[inputIdentifier]: {
 				...authForm[inputIdentifier],
 				value: event.target.value,
 				valid: checkValidation(event.target.value, authForm[inputIdentifier].validation),
 				touched: true
 			}
-		};
+		});
 		setAuthForm(updatedControls);
 	};
 	const submitHandler = (event) => {

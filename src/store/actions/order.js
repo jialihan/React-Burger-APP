@@ -1,6 +1,5 @@
 import * as actionTypes from 'src/store/actions/actionTypes';
 import axios from 'src/axios-orders';
-import { useImperativeHandle } from 'react';
 
 export const purchaseBurgerSuccess = (id, orderData) => {
 	return {

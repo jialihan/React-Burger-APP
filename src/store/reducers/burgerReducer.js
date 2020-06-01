@@ -1,5 +1,5 @@
 import * as actionTypes from 'src/store/actions/actionTypes';
-import { updateObject } from 'src/store/utility';
+import { updateObject } from 'src/shared/utility';
 
 const INGREDIENT_PRICES = {
 	salad: 0.5,
@@ -79,12 +79,13 @@ const burgerReducer = (state = initialState, action) => {
 			return setIngredients(state, action);
 		case actionTypes.FETCH_INGREDIENTS_FAILED:
 			return fetchIngredients(state.action);
+		default:
+			return state;
 		// return {
 		// 	...state,
 		// 	error: true
 		// };
 	}
-	return state;
 };
 
 export default burgerReducer;

@@ -78,7 +78,7 @@ class BurgerBuilder extends Component {
 			.reduce((newsum, el) => {
 				return newsum + el;
 			}, 0);
-		console.log('cur sum ingdt units: ', sum);
+		// console.log('cur sum ingdt units: ', sum);
 		return sum > 0;
 	}
 	addIngredientHandler = (type) => {
@@ -105,7 +105,6 @@ class BurgerBuilder extends Component {
      * what we want to render
      */
 	render() {
-		console.log('cur state:', this.props.ingrdients);
 		const disabledInfo = {
 			...this.props.ingredients
 		};

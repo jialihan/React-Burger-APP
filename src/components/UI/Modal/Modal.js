@@ -10,7 +10,7 @@ function Modal(props) {
 	useEffect(
 		function() {
 			setShouldComponentUpdate(true);
-			console.log('modal component should update...');
+			//console.log('modal component should update...');
 		},
 		[ props.show, props.children ]
 	);
