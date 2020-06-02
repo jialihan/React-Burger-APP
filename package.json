@@ -21,6 +21,8 @@
 		"css-loader": "3.4.2",
 		"dotenv": "8.2.0",
 		"dotenv-expand": "5.1.0",
+		"enzyme": "^3.11.0",
+		"enzyme-adapter-react-16": "^1.15.2",
 		"eslint": "^6.6.0",
 		"eslint-config-react-app": "^5.2.1",
 		"eslint-loader": "3.0.3",
@@ -54,6 +56,7 @@
 		"react-redux": "^7.2.0",
 		"react-router": "^5.2.0",
 		"react-router-dom": "^5.2.0",
+		"react-test-renderer": "^16.13.1",
 		"redux": "^4.0.5",
 		"redux-thunk": "^2.3.0",
 		"resolve": "1.15.0",
@@ -78,31 +81,14 @@
 		"extends": "react-app"
 	},
 	"browserslist": {
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all"
-		],
-		"development": [
-			"last 1 chrome version",
-			"last 1 firefox version",
-			"last 1 safari version"
-		]
+		"production": [ ">0.2%", "not dead", "not op_mini all" ],
+		"development": [ "last 1 chrome version", "last 1 firefox version", "last 1 safari version" ]
 	},
 	"jest": {
-		"roots": [
-			"<rootDir>/src"
-		],
-		"collectCoverageFrom": [
-			"src/**/*.{js,jsx,ts,tsx}",
-			"!src/**/*.d.ts"
-		],
-		"setupFiles": [
-			"react-app-polyfill/jsdom"
-		],
-		"setupFilesAfterEnv": [
-			"<rootDir>/src/setupTests.js"
-		],
+		"roots": [ "<rootDir>/src" ],
+		"collectCoverageFrom": [ "src/**/*.{js,jsx,ts,tsx}", "!src/**/*.d.ts" ],
+		"setupFiles": [ "react-app-polyfill/jsdom" ],
+		"setupFilesAfterEnv": [ "<rootDir>/src/setupTests.js" ],
 		"testMatch": [
 			"<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
 			"<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
@@ -122,27 +108,12 @@
 			"^react-native$": "react-native-web",
 			"^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
 		},
-		"moduleFileExtensions": [
-			"web.js",
-			"js",
-			"web.ts",
-			"ts",
-			"web.tsx",
-			"tsx",
-			"json",
-			"web.jsx",
-			"jsx",
-			"node"
-		],
-		"watchPlugins": [
-			"jest-watch-typeahead/filename",
-			"jest-watch-typeahead/testname"
-		]
+		"moduleFileExtensions": [ "web.js", "js", "web.ts", "ts", "web.tsx", "tsx", "json", "web.jsx", "jsx", "node" ],
+		"watchPlugins": [ "jest-watch-typeahead/filename", "jest-watch-typeahead/testname" ],
+		"moduleDirectories": [ "node_modules", "./" ]
 	},
 	"babel": {
-		"presets": [
-			"react-app"
-		]
+		"presets": [ "react-app" ]
 	},
 	"devDependencies": {
 		"babel-plugin-module-resolver": "^4.0.0"
